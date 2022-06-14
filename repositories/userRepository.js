@@ -3,12 +3,25 @@ const {
 } = require("../models");
 
 class usersRepository {
+
     static async getByEmail({
         email
     }) {
         const getUser = await users.findOne({
             where: {
                 email: email
+            }
+        });
+
+        return getUser;
+    }
+
+    static async getById({
+        id
+    }) {
+        const getUser = await users.findOne({
+            where: {
+                id
             }
         });
 
@@ -27,6 +40,29 @@ class usersRepository {
         });
 
         return createdUser;
+    }
+
+    static async updateById({
+        id,
+        name,
+        kota,
+        alamat,
+        noHp,
+        image
+    }) {
+        const updateById = await users.update({
+            name,
+            kota,
+            alamat,
+            noHp,
+            image
+        }, {
+            where: {
+                id
+            }
+        });
+
+        return updateById;
     }
 }
 
