@@ -75,9 +75,114 @@ class productService {
         return {
             status: true,
             status_code: 201,
-            message: "created posts successfully",
+            message: "created Product successfully",
             data: {
                 created_product: createdProduct,
+            },
+        };
+    }
+
+    static async updateById({
+        id,
+        user_id,
+        name,
+        price,
+        category,
+        description,
+        image,
+    }) {
+        const getProduct = await productRepository.getById({
+            id
+        });
+
+        if (getProduct.user_id == user_id) {
+            const updatedProduct = await productRepository.updateById({
+                id,
+                name,
+                price,
+                category,
+                description,
+                image,
+            });
+
+            return {
+                status: true,
+                status_code: 200,
+                message: "Product updated successfully",
+                data: {
+                    updated_product: updatedProduct,
+                },
+            };
+        } else {
+            return {
+                status: true,
+                status_code: 401,
+                message: "Resource Unauthorized",
+                data: {
+                    updated_product: null,
+                },
+            };
+        }
+    }
+
+    static async deleteById({
+        user_id,
+        id,
+    }) {
+        const getProduct = await productRepository.getById({
+            id
+        });
+
+        if (getProduct.user_id == user_id) {
+            const deletedProduct = await productRepository.deleteById({
+                id,
+            });
+
+            return {
+                status: true,
+                status_code: 200,
+                message: "Product deleted successfully",
+                data: {
+                    deleted_product: deletedProduct,
+                },
+            };
+        } else {
+            return {
+                status: true,
+                status_code: 401,
+                message: "Resource Unauthorized",
+                data: {
+                    deleted_post: null,
+                },
+            };
+        }
+    }
+
+    static async getAll() {
+        const getProductAll = await productRepository.getAll();
+
+        return {
+            status: true,
+            status_code: 200,
+            message: "Product successfully loaded",
+            data: {
+                getProductAll: getProductAll,
+            },
+        };
+    }
+
+    static async getById({
+        id,
+    }) {
+        const getProductById = await productRepository.getById({
+            id,
+        });
+        return {
+            status: true,
+            status_code: 200,
+            message: "success get data",
+            data: {
+                getProductById: getProductById,
             },
         };
     }

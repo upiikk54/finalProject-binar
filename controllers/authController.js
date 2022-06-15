@@ -48,7 +48,20 @@ const login = async (req, res) => {
     });
 };
 
+const currentUser = async (req, res) => {
+    const currentUser = req.user;
+
+    res.status(200).send({
+        status: true,
+        message: "Get current user success.",
+        data: {
+            user: currentUser,
+        },
+    });
+};
+
 module.exports = {
     register,
-    login
+    login,
+    currentUser
 }

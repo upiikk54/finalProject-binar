@@ -53,7 +53,30 @@ const updateById = async (req, res, next) => {
     });
 };
 
+const getProductById = async (req, res, next) => {
+    const {
+        id
+    } = req.params;
+
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } =
+    await userService.getProductById({
+        id,
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+};
+
 module.exports = {
     getById,
-    updateById
+    updateById,
+    getProductById
 }

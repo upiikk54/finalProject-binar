@@ -1,5 +1,6 @@
 const {
-    users
+    users,
+    product
 } = require("../models");
 
 class usersRepository {
@@ -63,6 +64,18 @@ class usersRepository {
         });
 
         return updateById;
+    }
+
+    static async getProductById({
+        id
+    }) {
+        const getUserProduct = await product.findAll({
+            where: {
+                user_id: id
+            }
+        });
+
+        return getUserProduct;
     }
 }
 

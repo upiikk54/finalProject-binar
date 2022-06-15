@@ -43,6 +43,23 @@ class userService {
             },
         };
     }
+
+    static async getProductById({
+        id
+    }) {
+        const getUserProduct = await userRepository.getProductById({
+            id,
+        });
+
+        return {
+            status: true,
+            status_code: 200,
+            message: "Your Product Success to get",
+            data: {
+                product: getUserProduct,
+            },
+        };
+    }
 }
 
 module.exports = userService
