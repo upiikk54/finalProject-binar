@@ -10,6 +10,7 @@ class productRepository {
         category,
         description,
         image,
+        isPublish,
     }) {
         const createdProduct = product.create({
             user_id,
@@ -18,6 +19,29 @@ class productRepository {
             category,
             description,
             image,
+            isPublish
+        });
+
+        return createdProduct;
+    }
+
+    static async createFalse({
+        user_id,
+        name,
+        price,
+        category,
+        description,
+        image,
+        isPublish,
+    }) {
+        const createdProduct = product.create({
+            user_id,
+            name,
+            price,
+            category,
+            description,
+            image,
+            isPublish
         });
 
         return createdProduct;

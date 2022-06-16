@@ -8,6 +8,7 @@ class productService {
         category,
         description,
         image,
+        isPublish,
     }) {
         if (!name) {
             return {
@@ -63,6 +64,7 @@ class productService {
                 },
             };
         }
+
         const createdProduct = await productRepository.create({
             user_id,
             name,
@@ -70,6 +72,91 @@ class productService {
             category,
             description,
             image,
+            isPublish
+        });
+
+        return {
+            status: true,
+            status_code: 201,
+            message: "created Product successfully",
+            data: {
+                created_product: createdProduct,
+            },
+        };
+    }
+
+    static async createFalse({
+        user_id,
+        name,
+        price,
+        category,
+        description,
+        image,
+        isPublish,
+    }) {
+        if (!name) {
+            return {
+                status: false,
+                status_code: 400,
+                message: "name wajib diisi",
+                data: {
+                    created_product: null,
+                },
+            };
+        }
+
+        if (!price) {
+            return {
+                status: false,
+                status_code: 400,
+                message: "price wajib diisi",
+                data: {
+                    created_product: null,
+                },
+            };
+        }
+
+        if (!category) {
+            return {
+                status: false,
+                status_code: 400,
+                message: "category wajib diisi",
+                data: {
+                    created_product: null,
+                },
+            };
+        }
+
+        if (!description) {
+            return {
+                status: false,
+                status_code: 400,
+                message: "description wajib diisi",
+                data: {
+                    created_product: null,
+                },
+            };
+        }
+
+        if (!image) {
+            return {
+                status: false,
+                status_code: 400,
+                message: "image wajib diisi",
+                data: {
+                    created_product: null,
+                },
+            };
+        }
+
+        const createdProduct = await productRepository.createFalse({
+            user_id,
+            name,
+            price,
+            category,
+            description,
+            image,
+            isPublish
         });
 
         return {

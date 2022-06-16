@@ -29,6 +29,7 @@ app.put("/api/users/update/:id", middlewares.authenticate, upload.single("image"
 
 // Define CRUD Product
 app.post("/api/product", middlewares.authenticate, upload.single("image"), productController.create);
+app.post("/api/product/false", middlewares.authenticate, upload.single("image"), productController.createFalse);
 app.put("/api/product/:id", middlewares.authenticate, upload.single("image"), productController.updateById);
 app.delete("/api/product/:id", middlewares.authenticate, productController.deleteById);
 

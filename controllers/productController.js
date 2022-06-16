@@ -22,6 +22,39 @@ const create = async (req, res) => {
         category,
         description,
         image: req.uploaded_image,
+        isPublish: "true",
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+};
+
+const createFalse = async (req, res) => {
+    const {
+        name,
+        price,
+        category,
+        description,
+    } = req.body;
+
+    const user_id = req.user.id;
+
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } = await productService.createFalse({
+        user_id,
+        name,
+        price,
+        category,
+        description,
+        image: req.uploaded_image,
+        isPublish: "false",
     });
 
     res.status(status_code).send({
@@ -128,6 +161,7 @@ const getById = async (req, res) => {
 
 module.exports = {
     create,
+    createFalse,
     updateById,
     deleteById,
     getAll,
