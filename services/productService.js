@@ -177,6 +177,7 @@ class productService {
         category,
         description,
         image,
+        isPublish,
     }) {
         const getProduct = await productRepository.getById({
             id
@@ -190,6 +191,7 @@ class productService {
                 category,
                 description,
                 image,
+                isPublish,
             });
 
             return {

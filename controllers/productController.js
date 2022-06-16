@@ -90,6 +90,7 @@ const updateById = async (req, res) => {
         category,
         description,
         image: req.uploaded_image,
+        isPublish: "true",
     });
 
     res.status(status_code).send({
