@@ -25,12 +25,11 @@ app.get("/auth/me", middlewares.authenticate, authController.currentUser);
 
 // Define Account
 app.get("/api/users/:id", userController.getById);
-app.put("/api/users/update/:id", middlewares.authenticate, upload.single("image"), userController.updateById);
+app.put("/api/users/update/:id", middlewares.authenticate, upload.fields([{name: "image"}]), userController.updateById);
 
 // Define CRUD Product
-app.post("/api/product", middlewares.authenticate, upload.single("image"), productController.create);
-app.post("/api/product/false", middlewares.authenticate, upload.single("image"), productController.createFalse);
-app.put("/api/product/:id", middlewares.authenticate, upload.single("image"), productController.updateById);
+app.post("/api/product", middlewares.authenticate, upload.fields([{name: "image"}]), productController.create);
+app.put("/api/product/:id", middlewares.authenticate, upload.fields([{name: "image"}]), productController.updateById);
 app.delete("/api/product/:id", middlewares.authenticate, productController.deleteById);
 
 // get Product

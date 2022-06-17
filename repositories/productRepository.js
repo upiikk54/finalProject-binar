@@ -25,28 +25,6 @@ class productRepository {
         return createdProduct;
     }
 
-    static async createFalse({
-        user_id,
-        name,
-        price,
-        category,
-        description,
-        image,
-        isPublish,
-    }) {
-        const createdProduct = product.create({
-            user_id,
-            name,
-            price,
-            category,
-            description,
-            image,
-            isPublish
-        });
-
-        return createdProduct;
-    }
-
     static async updateById({
         id,
         name,
