@@ -11,6 +11,7 @@ class productRepository {
         description,
         image,
         isPublish,
+        sold
     }) {
         const createdProduct = product.create({
             user_id,
@@ -19,7 +20,8 @@ class productRepository {
             category,
             description,
             image,
-            isPublish
+            isPublish,
+            sold
         });
 
         return createdProduct;
@@ -81,19 +83,41 @@ class productRepository {
     }
 
     static async getAllProduct({
+        isPublish,
+        sold,
         category
     }) {
+        if (isPublish) {
+            const filteredCars = await product.findAll({
+                where: {
+                    isPublish
+                }
+            });
+
+            return filteredCars;
+        }
+
+        if (sold) {
+            const filteredCars = await product.findAll({
+                where: {
+                    sold
+                }
+            });
+
+            return filteredCars;
+        }
+
         if (category) {
-            const filteredProduct = await product.findAll({
+            const filteredCars = await product.findAll({
                 where: {
                     category
                 }
             });
 
-            return filteredProduct;
+            return filteredCars;
         }
 
-        return cars;
+        return product;
     }
 }
 

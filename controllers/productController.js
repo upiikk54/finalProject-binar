@@ -7,6 +7,7 @@ const create = async (req, res) => {
         category,
         description,
         isPublish,
+        sold
     } = req.body;
 
     const user_id = req.user.id;
@@ -24,6 +25,7 @@ const create = async (req, res) => {
         description,
         image: req.uploaded_image,
         isPublish,
+        sold
     });
 
     res.status(status_code).send({
@@ -131,14 +133,14 @@ const getById = async (req, res) => {
 };
 
 const filtered = async (req, res) => {
-    const { category } = req.query;
+    const { isPublish, sold, category } = req.query;
 
     const {
         status,
         code_status,
         message,
         data
-    } = await productService.filtered({ category });
+    } = await productService.filtered({isPublish, sold, category });
 
     res.status(code_status).send({
         status: status,

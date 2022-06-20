@@ -8,6 +8,7 @@ class productService {
         category,
         description,
         image,
+        sold,
         isPublish,
     }) {
         if (!name) {
@@ -20,6 +21,28 @@ class productService {
                 },
             };
         }
+
+        if (sold === null) {
+            return {
+                status: false,
+                code_status: 400,
+                message: "driver wajib diisi",
+                data: {
+                    created_Cars: null,
+                }
+            }
+        };
+
+        if (isPublish === null) {
+            return {
+                status: false,
+                code_status: 400,
+                message: "driver wajib diisi",
+                data: {
+                    created_Cars: null,
+                }
+            }
+        };
 
         if (!price) {
             return {
@@ -81,7 +104,8 @@ class productService {
             category,
             description,
             image,
-            isPublish
+            isPublish,
+            sold
         });
 
         return {
@@ -237,16 +261,27 @@ class productService {
     }
 
     static async getAll() {
-        const getProductAll = await productRepository.getAll();
+        try {
+            const getProductAll = await productRepository.getAll();
 
-        return {
-            status: true,
-            status_code: 200,
-            message: "Product successfully loaded",
-            data: {
-                getProductAll: getProductAll,
-            },
-        };
+            return {
+                status: true,
+                status_code: 200,
+                message: "Product successfully loaded",
+                data: {
+                    getProductAll: getProductAll,
+                },
+            };
+        } catch (err) {
+            return {
+                status: false,
+                code_status: 500,
+                message: err.message,
+                data: {
+                    getProductAll: null,
+                },
+            };
+        }
     }
 
     static async getById({
@@ -266,10 +301,14 @@ class productService {
     }
 
     static async filtered({
+        isPublish,
+        sold,
         category
     }) {
         try {
             const getAllProduct = await productRepository.getAllProduct({
+                isPublish,
+                sold,
                 category
             });
 

@@ -26,6 +26,9 @@ module.exports = {
       image: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
+      sold: {
+        type: Sequelize.BOOLEAN
+      },
       isPublish: {
         type: Sequelize.BOOLEAN
       },
