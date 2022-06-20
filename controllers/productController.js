@@ -130,10 +130,28 @@ const getById = async (req, res) => {
     });
 };
 
+const filtered = async (req, res) => {
+    const { category } = req.query;
+
+    const {
+        status,
+        code_status,
+        message,
+        data
+    } = await productService.filtered({ category });
+
+    res.status(code_status).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+}
+
 module.exports = {
     create,
     updateById,
     deleteById,
     getAll,
     getById,
+    filtered
 }

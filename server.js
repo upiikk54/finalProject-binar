@@ -36,6 +36,7 @@ app.delete("/api/product/:id", middlewares.authenticate, productController.delet
 app.get("/api/product", productController.getAll);
 app.get('/api/product/:id', productController.getById);
 app.get("/users/:id/product", userController.getProductById);
+app.get("/api/product?", productController.filtered);
 
 
 app.use("/public/files", express.static(path.join(__dirname, "/storages")));

@@ -79,6 +79,22 @@ class productRepository {
 
         return getProductAll;
     }
+
+    static async getAllProduct({
+        category
+    }) {
+        if (category) {
+            const filteredProduct = await product.findAll({
+                where: {
+                    category
+                }
+            });
+
+            return filteredProduct;
+        }
+
+        return cars;
+    }
 }
 
 module.exports = productRepository;
