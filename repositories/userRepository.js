@@ -67,15 +67,29 @@ class usersRepository {
     }
 
     static async getProductById({
-        id
+        id,
+        isPublish,
+        sold
     }) {
-        const getUserProduct = await product.findAll({
-            where: {
-                user_id: id
-            }
-        });
+        const query = {
+            where: {}
+        }
 
-        return getUserProduct;
+        if (id) {
+            query.where = { ...query.where, user_id: id }
+        }
+
+        if (sold) {
+            query.where = { ...query.where, sold }
+        }
+
+        if (isPublish) {
+            query.where = { ...query.where, isPublish }
+        }
+
+        const getProductById = await product.findAll(query);
+
+        return getProductById;
     }
 }
 

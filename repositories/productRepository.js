@@ -1,6 +1,7 @@
 const {
     product
 } = require("../models");
+const { Op } = require("sequelize");
 
 class productRepository {
     static async create({
@@ -87,37 +88,87 @@ class productRepository {
         sold,
         category
     }) {
-        if (isPublish) {
-            const filteredCars = await product.findAll({
-                where: {
-                    isPublish
-                }
-            });
 
-            return filteredCars;
+        const query = {
+            where: {},
+            like: {}
         }
 
         if (sold) {
-            const filteredCars = await product.findAll({
-                where: {
-                    sold
-                }
-            });
-
-            return filteredCars;
+            query.where = { ...query.where, sold }
         }
 
         if (category) {
-            const filteredCars = await product.findAll({
-                where: {
-                    category
-                }
-            });
-
-            return filteredCars;
+            query.where = { ...query.where, category }
         }
 
-        return product;
+        if (isPublish) {
+            query.where = { ...query.where, isPublish }
+        }
+
+        const getAllProduct = await product.findAll(query);
+
+        return getAllProduct;
+        
+        // if (isPublish) {
+        //     const filteredCars = await product.findAll({
+        //         where: {
+        //             isPublish
+        //         }
+        //     });
+
+        //     return filteredCars;
+        // }
+
+        // if (sold) {
+        //     const filteredCars = await product.findAll({
+        //         where: {
+        //             sold
+        //         }
+        //     });
+
+        //     return filteredCars;
+        // }
+
+        // if (category) {
+        //     const filteredCars = await product.findAll({
+        //         where: {
+        //             category
+        //         }
+        //     });
+
+        //     return filteredCars;
+        // }
+
+        // if (isPublish) {
+        //     if (sold) {
+        //         if (category) {
+        //             const filteredCars = await product.findAll({
+        //                 where: {
+        //                     isPublish,
+        //                     sold,
+        //                     category
+        //                 }
+        //             });
+        
+        //             return filteredCars;
+        //         }
+        //     }
+        // }
+
+        // if (isPublish && sold || category) {
+        //     const filteredCars = await product.findAll({
+        //         where: {
+        //             isPublish,
+        //             sold,
+        //             category
+        //         }
+        //     });
+
+        //     return filteredCars;
+        // }
+
+        // return product;
     }
 }
 

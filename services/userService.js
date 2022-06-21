@@ -45,10 +45,14 @@ class userService {
     }
 
     static async getProductById({
-        id
+        id,
+        isPublish,
+        sold
     }) {
         const getUserProduct = await userRepository.getProductById({
             id,
+            isPublish,
+            sold
         });
 
         return {

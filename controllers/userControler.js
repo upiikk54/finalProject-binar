@@ -57,6 +57,10 @@ const getProductById = async (req, res, next) => {
     const {
         id
     } = req.params;
+    const {
+        isPublish,
+        sold
+    } = req.query;
 
     const {
         status,
@@ -66,6 +70,8 @@ const getProductById = async (req, res, next) => {
     } =
     await userService.getProductById({
         id,
+        isPublish,
+        sold
     });
 
     res.status(status_code).send({
