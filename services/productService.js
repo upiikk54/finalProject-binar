@@ -81,7 +81,7 @@ class productService {
             return {
                 status: false,
                 status_code: 400,
-                message: "image maksimal 4",
+                message: "image wajib diisi",
                 data: {
                     created_product: null,
                 },

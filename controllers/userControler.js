@@ -1,5 +1,20 @@
 const userService = require("../services/userService");
 
+const getAllUsers = async (req, res) => {
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } = await userService.getAllUsers();
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+};
+
 const getById = async (req, res) => {
     const {
         id
@@ -82,6 +97,7 @@ const getProductById = async (req, res, next) => {
 };
 
 module.exports = {
+    getAllUsers,
     getById,
     updateById,
     getProductById

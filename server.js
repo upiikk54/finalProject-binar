@@ -4,7 +4,8 @@ const PORT = 8888;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
-const upload = require("./utils/fileUpload")
+const upload = require("./utils/fileUpload");
+const uploadSingle = require("./utils/fileUploadSingle");
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,18 +25,19 @@ app.post("/auth/login", authController.login);
 app.get("/auth/me", middlewares.authenticate, authController.currentUser);
 
 // Define Account
-app.get("/api/users/:id", userController.getById);
-app.put("/api/users/update/:id", middlewares.authenticate, upload.fields([{name: "image"}]), userController.updateById);
+app.get("/api/users", userController.getAllUsers);
+app.get("/api/users/:id", middlewares.authenticate, userController.getById);
+app.put("/api/users/:id", middlewares.authenticate, uploadSingle.single("image"), userController.updateById);
 
 // Define CRUD Product
 app.post("/api/product", middlewares.authenticate, upload.fields([{name: "image"}]), productController.create);
 app.put("/api/product/:id", middlewares.authenticate, upload.fields([{name: "image"}]), productController.updateById);
 app.delete("/api/product/:id", middlewares.authenticate, productController.deleteById);
 
-// get Product
+// Get Product
 app.get("/api/product", productController.getAll);
-app.get('/api/product/:id', productController.getById);
-app.get("/users/:id/product", userController.getProductById);
+app.get('/api/product/:id',middlewares.authenticate, productController.getById);
+app.get("/users/:id/product", middlewares.authenticate, userController.getProductById);
 app.get("/api/filter?", productController.filtered);
 
 

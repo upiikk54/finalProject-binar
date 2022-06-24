@@ -17,6 +17,12 @@ class usersRepository {
         return getUser;
     }
 
+    static async getAllUsers() {
+        const getUser = await users.findAll();
+
+        return getUser;
+    }
+
     static async getById({
         id
     }) {
