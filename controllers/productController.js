@@ -133,14 +133,14 @@ const getById = async (req, res) => {
 };
 
 const filtered = async (req, res) => {
-    const { isPublish, sold, category } = req.query;
+    const { name, isPublish, sold, category } = req.query;
 
     const {
         status,
         code_status,
         message,
         data
-    } = await productService.filtered({isPublish, sold, category });
+    } = await productService.filtered({name, isPublish, sold, category });
 
     res.status(code_status).send({
         status: status,

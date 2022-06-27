@@ -301,12 +301,14 @@ class productService {
     }
 
     static async filtered({
+        name,
         isPublish,
         sold,
         category
     }) {
         try {
             const getAllProduct = await productRepository.getAllProduct({
+                name,
                 isPublish,
                 sold,
                 category

@@ -84,6 +84,7 @@ class productRepository {
     }
 
     static async getAllProduct({
+        name,
         isPublish,
         sold,
         category
@@ -92,6 +93,19 @@ class productRepository {
         const query = {
             where: {},
             like: {}
+        }
+
+        if (name) {
+            const searchByName = await product.findAll({
+                where: {
+                    [Op.or]: [
+                        { name: { [Op.like]: '%' + name + '%' } },
+                    ]
+                },
+                limit: 10,
+            });
+
+            return searchByName;
         }
 
         if (sold) {
