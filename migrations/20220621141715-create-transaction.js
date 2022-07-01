@@ -8,16 +8,33 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      owner_id: {
+        type: Sequelize.INTEGER,
+        reference: {
+          model: 'users',
+          key: 'id'
+        }
+      },
       user_id: {
         type: Sequelize.INTEGER
       },
       product_id: {
+        type: Sequelize.INTEGER,
+        reference: {
+          model: 'product',
+          key: 'id'
+        }
+      },
+      requestedPrice: {
         type: Sequelize.INTEGER
       },
-      total_harga: {
-        type: Sequelize.INTEGER
+      isAccepted: {
+        type: Sequelize.BOOLEAN
       },
-      isSold: {
+      isRejected: {
+        type: Sequelize.BOOLEAN
+      },
+      isOpened: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {

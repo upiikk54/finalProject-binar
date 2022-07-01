@@ -6,6 +6,8 @@ const cors = require("cors");
 const path = require("path");
 const upload = require("./utils/fileUpload");
 const uploadSingle = require("./utils/fileUploadSingle");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,6 +17,7 @@ app.use(cors());
 const authController = require("./controllers/authController");
 const userController = require("./controllers/userControler");
 const productController = require("./controllers/productController");
+const transactionController = require("./controllers/transactionController");
 
 // import Authenticate
 const middlewares = require("./middlewares/auth")
@@ -40,8 +43,17 @@ app.get('/api/product/:id',middlewares.authenticate, productController.getById);
 app.get("/users/:id/product", middlewares.authenticate, userController.getProductById);
 app.get("/api/filter?", productController.filtered);
 
+// Define Transaction
+app.post("/api/transaction", middlewares.authenticate, transactionController.createTransaction);
+
+// Define getTransaction
+app.get("/api/transaction/:id", middlewares.authenticate, transactionController.getTransactionByUserId);
+app.get("/api/transactionOwner/:id", middlewares.authenticate, transactionController.getTransactionByOwnerId);
 
 app.use("/public/files", express.static(path.join(__dirname, "/storages")));
+
+// API Documentation
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, () => {
     console.log(`Server berhasil berjalan di port http://localhost:${PORT}`);

@@ -2,11 +2,15 @@ const transactionService = require("../services/transactionService");
 
 const createTransaction = async (req, res) => {
     const {
-        id
-    } = req.params;
-    const {
-        total_harga
+        owner_id,
+        product_id,
+        requestedPrice,
+        isRejected,
+        isAccepted,
+        isOpened
     } = req.body;
+
+    const user_id = req.user.id;
 
     const {
         status,
@@ -15,8 +19,13 @@ const createTransaction = async (req, res) => {
         data
     } =
     await transactionService.createTransaction({
-        id,
-        total_harga
+        user_id,
+        owner_id,
+        product_id,
+        requestedPrice,
+        isRejected,
+        isAccepted,
+        isOpened
     });
 
     res.status(status_code).send({
@@ -26,6 +35,50 @@ const createTransaction = async (req, res) => {
     });
 }
 
+const getTransactionByUserId = async (req, res) => {
+    const {
+        id
+    } = req.params;
+
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } = await transactionService.getTransactionByUserId({
+        id
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+};
+
+const getTransactionByOwnerId = async (req, res) => {
+    const {
+        id
+    } = req.params;
+
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } = await transactionService.getTransactionByOwnerId({
+        id
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+};
+
 module.exports = {
-    createTransaction
+    createTransaction,
+    getTransactionByUserId,
+    getTransactionByOwnerId
 }
