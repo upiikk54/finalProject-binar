@@ -128,69 +128,6 @@ class productService {
         image,
         isPublish,
     }) {
-        if (!name) {
-            return {
-                status: false,
-                status_code: 400,
-                message: "name wajib diisi",
-                data: {
-                    created_product: null,
-                },
-            };
-        }
-
-        if (!price) {
-            return {
-                status: false,
-                status_code: 400,
-                message: "price wajib diisi",
-                data: {
-                    created_product: null,
-                },
-            };
-        }
-
-        if (!category) {
-            return {
-                status: false,
-                status_code: 400,
-                message: "category wajib diisi",
-                data: {
-                    created_product: null,
-                },
-            };
-        }
-
-        if (!description) {
-            return {
-                status: false,
-                status_code: 400,
-                message: "description wajib diisi",
-                data: {
-                    created_product: null,
-                },
-            };
-        }
-
-        if (!image.length) {
-            return {
-                status: false,
-                status_code: 400,
-                message: "image maksimal 4",
-                data: {
-                    created_product: null,
-                },
-            };
-        } else if (image.length >= 4) {
-            return {
-                status: false,
-                status_code: 400,
-                message: "image maksimal 4",
-                data: {
-                    created_product: null,
-                },
-            };
-        }
 
         const getProduct = await productRepository.getById({
             id
