@@ -46,6 +46,7 @@ const updateById = async (req, res, next) => {
         alamat,
         noHp,
     } = req.body;
+    
 
     const {
         status,
@@ -58,7 +59,7 @@ const updateById = async (req, res, next) => {
         kota,
         alamat,
         noHp,
-        image: req.uploaded_image,
+        image: req.file,
     });
 
     res.status(status_code).send({

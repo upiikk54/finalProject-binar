@@ -1,4 +1,5 @@
 const productRepository = require("../repositories/productRepository");
+const cloudinary = require("../cloudinary/cloudinary");
 
 class productService {
     static async create({
@@ -77,7 +78,7 @@ class productService {
             };
         }
 
-        if (!image.length) {
+        if (!image) {
             return {
                 status: false,
                 status_code: 400,
@@ -86,16 +87,16 @@ class productService {
                     created_product: null,
                 },
             };
-        } else if (image.length >= 5) {
-            return {
-                status: false,
-                status_code: 400,
-                message: "image maksimal 4",
-                data: {
-                    created_product: null,
-                },
-            };
         }
+
+        const images = [];
+        
+        await Promise.all(image.image.map(async (img) => {
+            const fileBase64 = img.buffer.toString("base64");
+            const file = `data:${img.mimetype};base64,${fileBase64}`;
+            const cloudinaryImage = await cloudinary.uploader.upload(file);
+            images.push(cloudinaryImage.url);
+        }))
 
         const createdProduct = await productRepository.create({
             user_id,
@@ -103,7 +104,7 @@ class productService {
             price,
             category,
             description,
-            image,
+            image: images,
             isPublish,
             sold
         });
@@ -134,13 +135,15 @@ class productService {
         });
 
         if (getProduct.user_id == user_id) {
+
+
             const updatedProduct = await productRepository.updateById({
                 id,
                 name,
                 price,
                 category,
                 description,
-                image,
+                image: cloudinaryImage.url,
                 isPublish,
             });
 

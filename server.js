@@ -5,12 +5,13 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const upload = require("./utils/fileUpload");
-const uploadSingle = require("./utils/fileUploadSingle");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(cors());
 
 // import Controller
@@ -30,7 +31,7 @@ app.get("/auth/me", middlewares.authenticate, authController.currentUser);
 // Define Account
 app.get("/api/users", userController.getAllUsers);
 app.get("/api/users/:id", middlewares.authenticate, userController.getById);
-app.put("/api/users/:id", middlewares.authenticate, uploadSingle.single("image"), userController.updateById);
+app.put("/api/users/:id", middlewares.authenticate, upload.single("image"), userController.updateById);
 
 // Define CRUD Product
 app.post("/api/product", middlewares.authenticate, upload.fields([{name: "image"}]), productController.create);
@@ -39,7 +40,7 @@ app.delete("/api/product/:id", middlewares.authenticate, productController.delet
 
 // Get Product
 app.get("/api/product", productController.getAll);
-app.get('/api/product/:id',middlewares.authenticate, productController.getById);
+app.get('/api/product/:id', middlewares.authenticate, productController.getById);
 app.get("/users/:id/product", middlewares.authenticate, userController.getProductById);
 app.get("/api/filter?", productController.filtered);
 
