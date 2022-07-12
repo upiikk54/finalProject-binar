@@ -123,66 +123,6 @@ class productRepository {
         const getAllProduct = await product.findAll(query);
 
         return getAllProduct;
-        
-        // if (isPublish) {
-        //     const filteredCars = await product.findAll({
-        //         where: {
-        //             isPublish
-        //         }
-        //     });
-
-        //     return filteredCars;
-        // }
-
-        // if (sold) {
-        //     const filteredCars = await product.findAll({
-        //         where: {
-        //             sold
-        //         }
-        //     });
-
-        //     return filteredCars;
-        // }
-
-        // if (category) {
-        //     const filteredCars = await product.findAll({
-        //         where: {
-        //             category
-        //         }
-        //     });
-
-        //     return filteredCars;
-        // }
-
-        // if (isPublish) {
-        //     if (sold) {
-        //         if (category) {
-        //             const filteredCars = await product.findAll({
-        //                 where: {
-        //                     isPublish,
-        //                     sold,
-        //                     category
-        //                 }
-        //             });
-        
-        //             return filteredCars;
-        //         }
-        //     }
-        // }
-
-        // if (isPublish && sold || category) {
-        //     const filteredCars = await product.findAll({
-        //         where: {
-        //             isPublish,
-        //             sold,
-        //             category
-        //         }
-        //     });
-
-        //     return filteredCars;
-        // }
-
-        // return product;
     }
 }
 

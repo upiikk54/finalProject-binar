@@ -45,6 +45,7 @@ app.get("/api/filter?", productController.filtered);
 
 // Define Transaction
 app.post("/api/transaction", middlewares.authenticate, transactionController.createTransaction);
+app.put("/api/transaction/:id", middlewares.authenticate, transactionController.updateTransaction);
 
 // Define getTransaction
 app.get("/api/transaction/:id", middlewares.authenticate, transactionController.getTransactionByUserId);

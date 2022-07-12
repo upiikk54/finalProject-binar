@@ -35,10 +35,53 @@ const createTransaction = async (req, res) => {
     });
 }
 
+const updateTransaction = async (req, res) => {
+    const {
+        id
+    } = req.params;
+    const {
+        owner_id,
+        product_id,
+        requestedPrice,
+        isRejected,
+        isAccepted,
+        isOpened
+    } = req.body;
+
+    const user_id = req.user.id;
+
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } =
+    await transactionService.updateTransaction({
+        id,
+        user_id,
+        owner_id,
+        product_id,
+        requestedPrice,
+        isRejected,
+        isAccepted,
+        isOpened
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+}
+
 const getTransactionByUserId = async (req, res) => {
     const {
         id
     } = req.params;
+    const {
+        isAccepted,
+        isRejected
+    } = req.query;
 
     const {
         status,
@@ -46,7 +89,9 @@ const getTransactionByUserId = async (req, res) => {
         message,
         data
     } = await transactionService.getTransactionByUserId({
-        id
+        id,
+        isAccepted,
+        isRejected
     });
 
     res.status(status_code).send({
@@ -60,6 +105,10 @@ const getTransactionByOwnerId = async (req, res) => {
     const {
         id
     } = req.params;
+    const {
+        isAccepted,
+        isRejected
+    } = req.query;
 
     const {
         status,
@@ -67,7 +116,9 @@ const getTransactionByOwnerId = async (req, res) => {
         message,
         data
     } = await transactionService.getTransactionByOwnerId({
-        id
+        id,
+        isAccepted,
+        isRejected
     });
 
     res.status(status_code).send({
@@ -79,6 +130,7 @@ const getTransactionByOwnerId = async (req, res) => {
 
 module.exports = {
     createTransaction,
+    updateTransaction,
     getTransactionByUserId,
     getTransactionByOwnerId
 }
