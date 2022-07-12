@@ -52,8 +52,6 @@ app.put("/api/transaction/:id", middlewares.authenticate, transactionController.
 app.get("/api/transaction/:id", middlewares.authenticate, transactionController.getTransactionByUserId);
 app.get("/api/transactionOwner/:id", middlewares.authenticate, transactionController.getTransactionByOwnerId);
 
-app.use("/public/files", express.static(path.join(__dirname, "/storages")));
-
 // API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

@@ -90,7 +90,7 @@ class productService {
         }
 
         const images = [];
-        
+
         await Promise.all(image.image.map(async (img) => {
             const fileBase64 = img.buffer.toString("base64");
             const file = `data:${img.mimetype};base64,${fileBase64}`;
@@ -135,7 +135,14 @@ class productService {
         });
 
         if (getProduct.user_id == user_id) {
+            const images = [];
 
+            await Promise.all(image.image.map(async (img) => {
+                const fileBase64 = img.buffer.toString("base64");
+                const file = `data:${img.mimetype};base64,${fileBase64}`;
+                const cloudinaryImage = await cloudinary.uploader.upload(file);
+                images.push(cloudinaryImage.url);
+            }))
 
             const updatedProduct = await productRepository.updateById({
                 id,
@@ -143,7 +150,7 @@ class productService {
                 price,
                 category,
                 description,
-                image: cloudinaryImage.url,
+                image: images,
                 isPublish,
             });
 

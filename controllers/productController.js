@@ -61,7 +61,7 @@ const updateById = async (req, res) => {
         price,
         category,
         description,
-        image: req.uploaded_image,
+        image: req.files,
         isPublish,
     });
 
