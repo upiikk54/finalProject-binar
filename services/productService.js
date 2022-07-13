@@ -135,14 +135,39 @@ class productService {
         });
 
         if (getProduct.user_id == user_id) {
-            const images = [];
+            let images = [];
 
-            await Promise.all(image.image.map(async (img) => {
-                const fileBase64 = img.buffer.toString("base64");
-                const file = `data:${img.mimetype};base64,${fileBase64}`;
-                const cloudinaryImage = await cloudinary.uploader.upload(file);
-                images.push(cloudinaryImage.url);
-            }))
+            if (image.image) {
+                await Promise.all(image.image.map(async (img) => {
+                    const fileBase64 = img.buffer.toString("base64");
+                    const file = `data:${img.mimetype};base64,${fileBase64}`;
+                    const cloudinaryImage = await cloudinary.uploader.upload(file);
+                    images.push(cloudinaryImage.url);
+                }))
+            } else {
+                images = getProduct.image
+            }
+
+            if(!name){
+                name = getProduct.name
+            }
+
+            if(!price){
+                price = getProduct.price
+            }
+
+            if(!category){
+                category = getProduct.category
+            }
+
+            if(!description){
+                description = getProduct.description
+            }
+
+            if(!isPublish){
+                isPublish = getProduct.isPublish
+            }
+
 
             const updatedProduct = await productRepository.updateById({
                 id,
