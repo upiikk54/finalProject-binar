@@ -4,6 +4,12 @@ const {
 } = require("../models");
 
 class transactionRepository {
+    static async getAllTransaction() {
+        const getAllTransaction = await transaction.findAll();
+
+        return getAllTransaction;
+    }
+
     static async createTransaction({
         user_id,
         owner_id,

@@ -1,7 +1,9 @@
 const {
-    product
+    product,
+    users
 } = require("../models");
 const { Op } = require("sequelize");
+const usersRepository = require("./userRepository");
 
 class productRepository {
     static async create({
@@ -68,11 +70,18 @@ class productRepository {
     static async getById({
         id
     }) {
-        const getProduct = await product.findOne({
-            where: {
-                id
-            }
-        });
+        const query = {
+            where: {},
+            include: [{
+                model: users,
+                attributes: ["id", "name", "kota", "image"]
+            }]
+        }
+        if(id){
+            query.where = { ...query.where, id: id}
+        }
+        
+        const getProduct = await product.findOne(query);
 
         return getProduct;
     }

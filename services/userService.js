@@ -43,9 +43,18 @@ class userService {
         })
 
         if (getUsersById.id == id) {
-            const fileBase64 = image.buffer.toString("base64");
-            const file = `data:${image.mimetype};base64,${fileBase64}`;
-            const cloudinaryImage = await cloudinary.uploader.upload(file);
+
+            let images = "";
+
+            if (image) {
+                const fileBase64 = image.buffer.toString("base64");
+                const file = `data:${image.mimetype};base64,${fileBase64}`;
+                const cloudinaryImage = await cloudinary.uploader.upload(file);
+                images = cloudinaryImage.url;
+            }else {
+                images = getUsersById.image
+            }
+
 
             const updatedUsers = await userRepository.updateById({
                 id,
@@ -53,7 +62,7 @@ class userService {
                 kota,
                 alamat,
                 noHp,
-                image: cloudinaryImage.url
+                image: images
             });
 
 

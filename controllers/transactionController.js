@@ -9,6 +9,7 @@ const createTransaction = async (req, res) => {
         isAccepted,
         isOpened
     } = req.body;
+    console.log(req.body);
 
     const user_id = req.user.id;
 
@@ -128,7 +129,23 @@ const getTransactionByOwnerId = async (req, res) => {
     });
 };
 
+const getAllTransaction = async (req, res) => {
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } = await transactionService.getAllTransaction();
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+};
+
 module.exports = {
+    getAllTransaction,
     createTransaction,
     updateTransaction,
     getTransactionByUserId,

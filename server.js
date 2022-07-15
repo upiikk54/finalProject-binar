@@ -49,6 +49,7 @@ app.post("/api/transaction", middlewares.authenticate, transactionController.cre
 app.put("/api/transaction/:id", middlewares.authenticate, transactionController.updateTransaction);
 
 // Define getTransaction
+app.get("/api/transaction", middlewares.authenticate, transactionController.getAllTransaction);
 app.get("/api/transaction/:id", middlewares.authenticate, transactionController.getTransactionByUserId);
 app.get("/api/transactionOwner/:id", middlewares.authenticate, transactionController.getTransactionByOwnerId);
 
