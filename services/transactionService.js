@@ -43,17 +43,6 @@ class transactionService {
             };
         }
 
-        if (!isOpened) {
-            return {
-                status: false,
-                status_code: 400,
-                message: "isOpened tidak ada value",
-                data: {
-                    created_transaksi: null,
-                },
-            };
-        }
-
         const createTransaction = await transactionRepository.createTransaction({
             user_id,
             owner_id,
@@ -77,7 +66,6 @@ class transactionService {
     static async updateTransaction({
         id,
         user_id,
-        owner_id,
         product_id,
         requestedPrice,
         isRejected,
@@ -88,11 +76,10 @@ class transactionService {
             id
         });
 
-        if (getTransaction.user_id == user_id) {
+        if (getTransaction.owner_id == user_id) {
             const updateTransaction = await transactionRepository.updateTransaction({
                 id,
                 user_id,
-                owner_id,
                 product_id,
                 requestedPrice,
                 isRejected,
@@ -110,7 +97,7 @@ class transactionService {
             };
         } else {
             return {
-                status: true, 
+                status: true,
                 status_code: 401,
                 message: "Resource Unauthorized",
                 data: {
@@ -136,6 +123,26 @@ class transactionService {
             message: "success get data",
             data: {
                 getTransactionByUserId: getTransactionByUserId,
+            },
+        };
+    }
+
+    static async getTransactionNotif({
+        id,
+        isAccepted,
+        isRejected
+    }) {
+        const getTransactionNotif = await transactionRepository.getTransactionNotif({
+            id,
+            isAccepted,
+            isRejected
+        });
+        return {
+            status: true,
+            status_code: 200,
+            message: "success get data",
+            data: {
+                getTransactionNotif: getTransactionNotif,
             },
         };
     }
@@ -182,6 +189,26 @@ class transactionService {
                 },
             };
         }
+    }
+
+    static async getTransactionById({
+        isAccepted,
+        isRejected,
+        id,
+    }) {
+        const getTransactionById = await transactionRepository.getTransactionById({
+            isAccepted,
+            isRejected,
+            id,
+        });
+        return {
+            status: true,
+            status_code: 200,
+            message: "success get data",
+            data: {
+                getTransactionById: getTransactionById,
+            },
+        };
     }
 }
 

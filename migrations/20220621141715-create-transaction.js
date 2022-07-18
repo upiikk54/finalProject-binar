@@ -16,7 +16,11 @@ module.exports = {
         }
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        reference: {
+          model: 'users',
+          key: 'id'
+        }
       },
       product_id: {
         type: Sequelize.INTEGER,

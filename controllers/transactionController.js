@@ -129,6 +129,33 @@ const getTransactionByOwnerId = async (req, res) => {
     });
 };
 
+const getTransactionNotif = async (req, res) => {
+    const {
+        id
+    } = req.params;
+    const {
+        isAccepted,
+        isRejected
+    } = req.query;
+
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } = await transactionService.getTransactionNotif({
+        id,
+        isAccepted,
+        isRejected
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+};
+
 const getAllTransaction = async (req, res) => {
     const {
         status,
@@ -144,8 +171,37 @@ const getAllTransaction = async (req, res) => {
     });
 };
 
+const getTransactionById = async (req, res) => {
+    const {
+        id
+    } = req.params;
+    const {
+        isAccepted,
+        isRejected
+    } = req.query;
+
+    const {
+        status,
+        status_code,
+        message,
+        data
+    } = await transactionService.getTransactionById({
+        id,
+        isAccepted,
+        isRejected
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+};
+
 module.exports = {
     getAllTransaction,
+    getTransactionNotif,
+    getTransactionById,
     createTransaction,
     updateTransaction,
     getTransactionByUserId,

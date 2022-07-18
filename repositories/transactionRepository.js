@@ -1,13 +1,57 @@
 const {
     product,
+    users,
     transaction
 } = require("../models");
+const { Op } = require("sequelize");
+
 
 class transactionRepository {
     static async getAllTransaction() {
         const getAllTransaction = await transaction.findAll();
 
         return getAllTransaction;
+    }
+
+    static async getTransactionById({
+        id,
+        isAccepted,
+        isRejected
+    }) {
+        const query = {
+            where: {},
+            include: [{
+                model: product,
+                attributes: ["name", "category", "price", "image"]
+            },
+            {
+                model: users,
+                attributes: ["name", "email", "kota", "alamat", "noHp", "image"]
+            }]
+        }
+
+        if (id) {
+            query.where = {
+                ...query.where,
+                id: id
+            }
+        }
+        if (isAccepted) {
+            query.where = {
+                ...query.where,
+                isAccepted
+            }
+        }
+        if (isRejected) {
+            query.where = {
+                ...query.where,
+                isRejected
+            }
+        }
+
+        const getTransactionByUserId = await transaction.findOne(query);
+
+        return getTransactionByUserId;
     }
 
     static async createTransaction({
@@ -35,18 +79,11 @@ class transactionRepository {
     static async updateTransaction({
         id,
         user_id,
-        owner_id,
-        product_id,
-        requestedPrice,
         isRejected,
         isAccepted,
         isOpened
     }) {
         const updateTransaction = await transaction.update({
-            user_id,
-            owner_id,
-            product_id,
-            requestedPrice,
             isRejected,
             isAccepted,
             isOpened
@@ -57,18 +94,6 @@ class transactionRepository {
         });
 
         return updateTransaction;
-    }
-
-    static async getTransactionById({
-        id
-    }) {
-        const getTransaction = await transaction.findOne({
-            where: {
-                id
-            }
-        });
-
-        return getTransaction;
     }
 
     static async getTransactionByUserId({
@@ -118,6 +143,10 @@ class transactionRepository {
             include: [{
                 model: product,
                 attributes: ["name", "category", "price", "image"]
+            },
+            {
+                model: users,
+                attributes: ["name", "email", "kota", "alamat", "noHp", "image"]
             }]
         }
 
@@ -125,6 +154,48 @@ class transactionRepository {
             query.where = {
                 ...query.where,
                 owner_id: id
+            }
+        }
+        if (isAccepted) {
+            query.where = {
+                ...query.where,
+                isAccepted
+            }
+        }
+        if (isRejected) {
+            query.where = {
+                ...query.where,
+                isRejected
+            }
+        }
+
+        const getTransactionByUserId = await transaction.findAll(query);
+        console.log(query);
+        console.log(typeof isRejected);
+        return getTransactionByUserId;
+    }
+
+    static async getTransactionNotif({
+        id,
+        isAccepted,
+        isRejected
+    }) {
+        const query = {
+            where: {},
+            include: [{
+                model: product,
+                attributes: ["name", "category", "price", "image"]
+            },
+            {
+                model: users,
+                attributes: ["name", "email", "kota", "alamat", "noHp", "image"]
+            }]
+        }
+
+        if (id) {
+            query.where = {
+                ...query.where,
+                [Op.or]: [ {owner_id: {[Op.eq]: id}}, {user_id: {[Op.eq]: id}} ]
             }
         }
         if (isAccepted) {

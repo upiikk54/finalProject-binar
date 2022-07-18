@@ -50,6 +50,8 @@ app.put("/api/transaction/:id", middlewares.authenticate, transactionController.
 
 // Define getTransaction
 app.get("/api/transaction", middlewares.authenticate, transactionController.getAllTransaction);
+app.get("/api/transactionById/:id", middlewares.authenticate, transactionController.getTransactionById);
+app.get("/api/transactionNotif/:id", middlewares.authenticate, transactionController.getTransactionNotif);
 app.get("/api/transaction/:id", middlewares.authenticate, transactionController.getTransactionByUserId);
 app.get("/api/transactionOwner/:id", middlewares.authenticate, transactionController.getTransactionByOwnerId);
 
