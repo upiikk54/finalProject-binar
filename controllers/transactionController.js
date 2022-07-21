@@ -46,7 +46,8 @@ const updateTransaction = async (req, res) => {
         requestedPrice,
         isRejected,
         isAccepted,
-        isOpened
+        isOpened,
+        sold
     } = req.body;
 
     const user_id = req.user.id;
@@ -65,7 +66,8 @@ const updateTransaction = async (req, res) => {
         requestedPrice,
         isRejected,
         isAccepted,
-        isOpened
+        isOpened,
+        sold,
     });
 
     res.status(status_code).send({

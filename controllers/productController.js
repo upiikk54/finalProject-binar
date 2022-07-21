@@ -45,6 +45,7 @@ const updateById = async (req, res) => {
         category,
         description,
         isPublish,
+        isSold,
     } = req.body;
 
     const user_id = req.user.id;
@@ -63,6 +64,7 @@ const updateById = async (req, res) => {
         description,
         image: req.files,
         isPublish,
+        isSold,
     });
 
     res.status(status_code).send({

@@ -1,3 +1,4 @@
+const productRepository = require("../repositories/productRepository");
 const transactionRepository = require("../repositories/transactionRepository");
 
 class transactionService {
@@ -70,8 +71,10 @@ class transactionService {
         requestedPrice,
         isRejected,
         isAccepted,
-        isOpened
+        isOpened,
+        sold,
     }) {
+        console.log(sold);
         const getTransaction = await transactionRepository.getTransactionById({
             id
         });
@@ -87,12 +90,19 @@ class transactionService {
                 isOpened
             });
 
+            const updateProduct = await productRepository.updateById({
+                id: getTransaction.product_id,
+                sold
+            })
+            
+
             return {
                 status: true,
                 status_code: 200,
                 message: "updated Product successfully",
                 data: {
                     update_transaksi: updateTransaction,
+                    update_transaksi: updateProduct,
                 },
             };
         } else {

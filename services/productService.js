@@ -128,6 +128,7 @@ class productService {
         description,
         image,
         isPublish,
+        isSold,
     }) {
 
         const getProduct = await productRepository.getById({
@@ -168,6 +169,10 @@ class productService {
                 isPublish = getProduct.isPublish
             }
 
+            if(!isSold){
+                isSold = getProduct.isSold
+            }
+
 
             const updatedProduct = await productRepository.updateById({
                 id,
@@ -177,6 +182,7 @@ class productService {
                 description,
                 image: images,
                 isPublish,
+                isSold,
             });
 
             return {

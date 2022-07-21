@@ -38,6 +38,7 @@ class productRepository {
         description,
         image,
         isPublish,
+        sold,
     }) {
         const updateById = await product.update({
             name,
@@ -46,6 +47,7 @@ class productRepository {
             description,
             image,
             isPublish,
+            sold,
         }, {
             where: {
                 id

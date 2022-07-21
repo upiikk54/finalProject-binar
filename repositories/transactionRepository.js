@@ -22,7 +22,7 @@ class transactionRepository {
             where: {},
             include: [{
                 model: product,
-                attributes: ["name", "category", "price", "image"]
+                attributes: ["name", "category", "price", "image", "sold"]
             },
             {
                 model: users,
@@ -105,7 +105,7 @@ class transactionRepository {
             where: {},
             include: [{
                 model: product,
-                attributes: ["name", "category", "price", "image"]
+                attributes: ["name", "category", "price", "image", "sold"]
             }]
         }
 
@@ -142,7 +142,7 @@ class transactionRepository {
             where: {},
             include: [{
                 model: product,
-                attributes: ["name", "category", "price", "image"]
+                attributes: ["name", "category", "price", "image", "sold"]
             },
             {
                 model: users,
@@ -170,8 +170,6 @@ class transactionRepository {
         }
 
         const getTransactionByUserId = await transaction.findAll(query);
-        console.log(query);
-        console.log(typeof isRejected);
         return getTransactionByUserId;
     }
 
@@ -184,7 +182,7 @@ class transactionRepository {
             where: {},
             include: [{
                 model: product,
-                attributes: ["name", "category", "price", "image"]
+                attributes: ["name", "category", "price", "image", "sold"]
             },
             {
                 model: users,
