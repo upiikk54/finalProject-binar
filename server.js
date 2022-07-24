@@ -58,6 +58,6 @@ app.get("/api/transactionOwner/:id", middlewares.authenticate, transactionContro
 // API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.listen(PORT, () => {
-    console.log(`Server berhasil berjalan di port http://localhost:${PORT}`);
+app.listen(process.env.PORT || PORT, () => {
+    console.log(`Server berhasil berjalan di port http://localhost:${process.env.PORT || PORT}`);
 });
